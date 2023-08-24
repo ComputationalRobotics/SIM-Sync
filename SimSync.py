@@ -1,6 +1,6 @@
 # Xihang Yu
 # 07/29/2023
-# regularized SIM-Sync
+# SIM-Sync
 
 import numpy as np
 from scipy.linalg import svd
@@ -17,7 +17,16 @@ def streamprinter(text):
     sys.stdout.flush()
 
 
-def SimSyncReg(N, edges, pointclouds, scale_gt=None, Weights = None, reg_lambda=1000):
+def SimSync(N, edges, pointclouds, scale_gt=None, Weights = None, reg_lambda=1000):
+
+    """
+    N: number of poses
+    edges: a list of length E, each element is a tuple in the form (i, j)
+    pointclouds: a list of length E, each element is a 2D numpy array of size (6, nij) where nij is the number of pointclouds for edge (i, j)
+    scale_gt: If provided, it is of size (N,1). If it is None, scale prediction is turned off.
+    Weights: If provided, it is of size (|correspondences for all edges|, ). If it is None, Weights are initiliazed to all-ones array.
+    reg_lambda: regulation parameter.
+    """
 
 
     weights_deepcopy = copy.deepcopy(Weights)
